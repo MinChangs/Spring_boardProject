@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="layout" template="/common/layout.jsp">
+		<put-attribute name="header" value="/common/header.jsp"/>
+		<put-attribute name="left" value="/common/left.jsp"/>
+		<put-attribute name="body" value=""/>
+	</definition>
+	
+<!-- 	main -->
+	<definition name="tiles.main" extends="layout">
+		<put-attribute name="body" value="/main.jsp"/>
+	</definition>
+	
+	<definition name="tiles.boardPagingView" extends="layout">
+		<put-attribute name="body" value="/board/boardPagingList.jsp"/>
+	</definition>
+
+	<definition name="tiles.createBoard" extends="layout">
+		<put-attribute name="body" value="/board/createBoard.jsp"/>
+	</definition>
+	
+	<definition name="tiles.insertPost" extends="layout">
+		<put-attribute name="body" value="/board/insertPost.jsp"/>
+	</definition>
+	
+	<definition name="tiles.post" extends="layout">
+		<put-attribute name="body" value="/board/post.jsp"/>
+	</definition>
+	
+	<definition name="tiles.postModify" extends="layout">
+		<put-attribute name="body" value="/board/postModify.jsp"/>
+	</definition>
+
+</tiles-definitions>

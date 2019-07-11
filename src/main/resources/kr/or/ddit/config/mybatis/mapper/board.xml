@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+	<select id="getYBoard" resultType="boardVo">
+		SELECT * FROM BOARD WHERE USE_YN='y'
+	</select>
+	
+	<select id="getAllBoard" resultType="boardVo">
+		SELECT * FROM BOARD
+	</select>
+	
+	<select id="getOneBoard" parameterType="int" resultType="boardVo">
+		SELECT * FROM BOARD WHERE BOARD_ID=#{board_id}
+	</select>
+	
+	<select id="updateBoard" parameterType="boardVo">
+		update Board set NAME=#{name}, USE_YN= #{use_yn} where BOARD_ID=#{board_id}
+	</select>
+	
+	<select id="insertBoard" parameterType="boardVo">
+		INSERT INTO BOARD VALUES(board_seq.nextval, #{userId}, #{name}, #{use_yn}, sysdate)
+	</select>
+	
+	
+	<select id="postPagingList" parameterType="pageVo" resultType="postVo">
+		<![CDATA[
+			SELECT b.*
+			FROM
+			(select a.*, rownum rn
+			from
+			(select POST.POST_SEQ, POST.PARENT_SEQ 
+			,lpad('   Re: ',(level-1)*7) ||POST.TITLE title 
+			,level ,POST.USERID ,POST.COMPLETE_DT, POST.USE_YN  from POST
+			WHERE POST.BOARD_ID = #{board_id}
+			START WITH PARENT_SEQ IS NULL
+			CONNECT BY PRIOR POST_SEQ = PARENT_SEQ
+			ORDER SIBLINGS BY GROUP_SEQ desc, POST_SEQ )a) b
+			where rn>=(#{page}-1)*#{pageSize}+1  and rn<= (#{page}*#{pageSize})
+		]]>
+	</select>
+	
+	
+	<select id="postCnt" parameterType="int" resultType="int">
+		SELECT /*+ INDEX_FSS(POST PK_POST)*/COUNT(*) FROM POST where BOARD_ID=#{boardId}
+	</select>
+	
+	<select id="getOnePost" parameterType="int" resultType="postVo">
+		SELECT * FROM POST 
+		WHERE POST_SEQ = #{post_seq}
+	</select>
+	
+	<select id="getReply" parameterType="int" resultType="replyVo">
+		SELECT * FROM REPLY WHERE POST_SEQ = #{post_seq}
+	</select>
+	
+	<insert id="insertReply" parameterType="replyVo">
+		INSERT INTO REPLY VALUES(REPLY_SEQ.nextval, #{post_seq}, #{reply_content} ,sysdate, #{userid},'y' )
+	</insert>
+	
+	<insert id="insertAttachment" parameterType="attachmentVo">
+		INSERT INTO ATTACHMENT VALUES(ATTACHMENT_SEQ.nextval,#{post_seq}, #{path}, #{filename} ,'y')
+	</insert>
+	
+	<select id="postSeqCurrval" resultType="int">
+		  SELECT /*+ INDEX(post PK_POST)*/ max(post_seq) FROM post
+	</select>
+	
+	<insert id="insertPost" parameterType="postVo">
+		insert into POST values(POST_SEQ.nextval, #{userid}, #{title}, #{content}, sysdate 
+		,null,#{board_id},POST_GROUPSEQ.NEXTVAL,'y')
+	</insert>
+	
+	<update id="updatePost" parameterType="postVo">
+		UPDATE POST SET TITLE = #{title}, CONTENT=#{content}, COMPLETE_DT=SYSDATE WHERE POST_SEQ=#{post_seq}
+	</update>
+	
+	<select id="getAttachment" parameterType="int" resultType="attachmentVo">
+		SELECT * FROM ATTACHMENT WHERE POST_SEQ =#{post_seq} and use_yn='y'
+	</select>
+	
+	<select id="getAttachmentPath" parameterType="int" resultType="String">
+		select path from ATTACHMENT where ATTACHMENT_SEQ = #{attachment_seq} and use_yn='y'
+	</select>
+	
+	<update id="deleteAttachment" parameterType="int">
+		UPDATE ATTACHMENT SET use_yn = 'n' WHERE ATTACHMENT_SEQ=#{attachment_seq}
+	</update>
+	
+	
+	<update id="deletePost" parameterType="int">
+		UPDATE post SET use_yn = 'n' WHERE post_Seq=#{post_seq}
+	</update>
+	
+	<insert id="insertReplyPost" parameterType="postVo">
+		insert into POST values(POST_SEQ.nextval, #{userid}, #{title}, #{content}, sysdate 
+		,#{parent_seq},#{board_id},#{group_seq},'y')
+	</insert>
+	
+	<update id="deleteReply" parameterType="int">
+		update reply set use_yn='n' where reply_Seq=#{reply_Seq}
+	</update>
+	
+	<select id="postSearch" parameterType="map" resultType="postVo">
+		<![CDATA[
+			SELECT b.*
+			FROM
+			(select a.*, rownum rn
+			from
+			(select POST.POST_SEQ, POST.PARENT_SEQ 
+			,lpad('   Re: ',(level-1)*7) ||POST.TITLE title 
+			,level ,POST.USERID ,POST.COMPLETE_DT, POST.USE_YN  from POST
+			WHERE POST.BOARD_ID = #{board_id}
+			AND ${searchSelect} LIKE '%'||#{searchTxt}||'%'
+			AND USE_YN='y'
+			START WITH PARENT_SEQ IS NULL
+			CONNECT BY PRIOR POST_SEQ = PARENT_SEQ
+			ORDER SIBLINGS BY GROUP_SEQ desc, POST_SEQ )a) b
+			where rn>=(#{page}-1)*#{pageSize}+1  and rn<= (#{page}*#{pageSize})
+		]]>
+		
+	</select>
+	
+	<select id="postSearchCnt" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM POST where BOARD_ID=#{board_id} AND ${searchSelect} LIKE '%'||#{searchTxt}||'%'
+	</select>
+	
+</mapper>

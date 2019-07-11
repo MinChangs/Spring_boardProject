@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+
+	 
+	 
+	<!-- 전체 사용자 리스트 조회 -->
+	<select id="userList" resultType="userVo">
+		select * from users order by userid
+	</select>
+	
+	<!-- 특정 사용자 조회 -->
+	<select id="getUser" resultType="userVo" parameterType="String">
+		SELECT * FROM USERS WHERE USERID= #{userid}
+	</select>
+	
+	
+</mapper>
