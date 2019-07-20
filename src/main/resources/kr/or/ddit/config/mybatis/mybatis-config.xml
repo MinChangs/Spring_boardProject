@@ -11,6 +11,7 @@
 		<typeAlias alias="postVo" type="kr.or.ddit.board.model.PostVo" />
 		<typeAlias alias="replyVo" type="kr.or.ddit.board.model.ReplyVo" />
 		<typeAlias alias="attachmentVo" type="kr.or.ddit.board.model.AttachmentVo" />
+		<typeAlias alias="calendarVo" type="kr.or.ddit.board.model.CalendarVo" />
 	</typeAliases>
 
 

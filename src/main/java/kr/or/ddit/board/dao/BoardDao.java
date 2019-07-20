@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.board.model.AttachmentVo;
 import kr.or.ddit.board.model.BoardVo;
+import kr.or.ddit.board.model.CalendarVo;
 import kr.or.ddit.board.model.PostVo;
 import kr.or.ddit.board.model.ReplyVo;
 import kr.or.ddit.paging.model.PageVo;
@@ -286,6 +287,31 @@ public class BoardDao implements IBoardDao {
 	public int postSearchCnt(Map<String, Object> map) {
 		return sqlSession.selectOne("board.postSearchCnt",map);
 	}
+
+
+
+	@Override
+	public int insertCalendar(CalendarVo vo) {
+		return sqlSession.insert("board.insertCalendar",vo);
+	}
+
+
+
+	@Override
+	public List<CalendarVo> getCalendar() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("board.getCalendar");
+	}
+
+
+
+	@Override
+	public int updateCalendar(CalendarVo vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("board.updateCalendar",vo);
+	}
+	
+	
 
 
 }

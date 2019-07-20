@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import kr.or.ddit.board.dao.IBoardDao;
 import kr.or.ddit.board.model.AttachmentVo;
 import kr.or.ddit.board.model.BoardVo;
+import kr.or.ddit.board.model.CalendarVo;
 import kr.or.ddit.board.model.PostVo;
 import kr.or.ddit.board.model.ReplyVo;
 import kr.or.ddit.paging.model.PageVo;
@@ -221,6 +222,27 @@ public class BoardService implements IBoardService {
 		resultMap.put("paginationSize",paginationSize);
 		
 		return resultMap;
+	}
+
+
+	@Override
+	public int insertCalendar(CalendarVo vo) {
+		// TODO Auto-generated method stub
+		return boardDao.insertCalendar(vo);
+	}
+
+
+	@Override
+	public List<CalendarVo> getCalendar() {
+		// TODO Auto-generated method stub
+		return boardDao.getCalendar();
+	}
+
+
+	@Override
+	public int updateCalendar(CalendarVo vo) {
+		// TODO Auto-generated method stub
+		return boardDao.updateCalendar(vo);
 	}
 
 	

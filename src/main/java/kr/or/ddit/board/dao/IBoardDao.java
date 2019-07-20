@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.or.ddit.board.model.AttachmentVo;
 import kr.or.ddit.board.model.BoardVo;
+import kr.or.ddit.board.model.CalendarVo;
 import kr.or.ddit.board.model.PostVo;
 import kr.or.ddit.board.model.ReplyVo;
 import kr.or.ddit.paging.model.PageVo;
@@ -233,6 +234,10 @@ public interface IBoardDao {
 	List<PostVo> postSearch(Map<String, Object> map);
 	
 	int postSearchCnt(Map<String, Object> map);
+	
+	int insertCalendar(CalendarVo vo) ;
+	List<CalendarVo> getCalendar() ;
+	int updateCalendar(CalendarVo vo) ;
 	
 	
 	
