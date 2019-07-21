@@ -235,6 +235,10 @@ public class BoardController {
 					int post_seq=boardService.postSeqCurrval();
 					attachmentVo.setPost_seq(post_seq);
 					
+					logger.debug("setPath :{}", attachmentVo.getPath());
+					logger.debug("setFilename :{}", attachmentVo.getFilename());
+					logger.debug("setPost_seq :{}", attachmentVo.getPost_seq());
+					
 					try {
 						files[i].transferTo(uploadfile);
 					} catch (IllegalStateException | IOException e) {

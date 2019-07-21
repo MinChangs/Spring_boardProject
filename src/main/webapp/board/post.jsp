@@ -20,6 +20,7 @@
 <!-- css, js -->
 <%@include file="/common/basicLib.jsp"%>
 
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f7a976957407edfce0f821ce36e56056&libraries=services,clusterer,drawing"></script>
 <script>
 $(document).ready(function() {
 	var msg = '${msg}';
@@ -56,8 +57,140 @@ $(document).ready(function() {
 	ajaxgettPost("${post.post_seq}");
 	
 	
+	
+	
+	getLocation();
+
+	
 
 });
+
+
+//gps정보 얻어오기
+function getLocation() {
+	  if (navigator.geolocation) {
+	    navigator.geolocation.getCurrentPosition(showPosition);
+	  } else { 
+	    x.innerHTML = "Geolocation is not supported by this browser.";
+	  }
+	}
+	
+
+var nLat;
+var nLng;
+
+function showPosition(position) {
+	
+	nLat = position.coords.latitude;
+	nLng = position.coords.longitude;
+	
+	map_init(nLat, nLng);
+	
+	
+}
+
+var map;
+
+function map_init(nLat, nLng){
+	var container = document.getElementById('map');
+	var options = {
+		center: new kakao.maps.LatLng(nLat, nLng),
+		level: 3
+	};
+
+	map = new kakao.maps.Map(container, options);
+	
+	drawMarker(nLat,nLng)
+	
+}
+
+
+function drawMarker(nLat, nLng){
+// 	var imageSrc = '../img/place.png', // 마커이미지의 주소입니다    
+//     imageSize = new kakao.maps.Size(32, 37), // 마커이미지의 크기입니다
+//     imageOption = {offset: new kakao.maps.Point(16, 37)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+// var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+//     markerPosition = new kakao.maps.LatLng(nLat, nLng); // 마커가 표시될 위치입니다
+
+// // 마커를 생성합니다
+// var marker = new kakao.maps.Marker({
+//   position: markerPosition,
+//   image: markerImage // 마커이미지 설정 
+// });
+
+// // 마커가 지도 위에 표시되도록 설정합니다
+// marker.setMap(map);  
+
+
+
+
+
+var imageSrc = '../img/place.png', // 마커이미지의 주소입니다    
+imageSize = new kakao.maps.Size(32, 37), // 마커이미지의 크기입니다
+imageOption = {offset: new kakao.maps.Point(16, 37)}; // 마커이미지의 옵
+
+
+var geocoder = new daum.maps.services.Geocoder();
+
+var listData = [
+	
+	    {
+	        groupAddress: '대전광역시 중구 중앙로76' 
+	    },
+	    {
+	        groupAddress: '대전 중구 중앙로 77' 
+	    },
+	    {
+	        groupAddress: '대전 유성구 유성대로654번길 130' 
+	    }
+
+];
+
+    
+for (var i=0; i < listData.length ; i++) {
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch(listData[i].groupAddress, function(result, status) {
+
+	    // 정상적으로 검색이 완료됐으면 
+	     if (status === daum.maps.services.Status.OK) {
+		   var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+	       markerPosition = new daum.maps.LatLng(result[0].y, result[0].x);
+
+
+	        // 결과값으로 받은 위치를 마커로 표시합니다
+	        var marker = new daum.maps.Marker({
+	            map: map,
+	            position: markerPosition,
+	            image: markerImage
+	        });
+
+	        // 인포윈도우로 장소에 대한 설명을 표시합니다
+	        var infowindow = new daum.maps.InfoWindow({
+	            content: result[0].y + "," + result[0].x
+	        });
+	        infowindow.open(map, marker);
+	        
+			var coords = new daum.maps.LatLng(nLat, nLng);
+			map.setCenter(coords);
+// 	        marker.setMap(map);
+
+	    } 
+	})
+
+
+	} 
+
+	
+}
+
+
+
+
+
+
+
 
 function ajaxgettPost(post_seq) {
 	$.ajax({
@@ -116,6 +249,10 @@ function ajaxdeleteReply(reply_seq,post_seq) {
 		}
 	});
 }
+
+
+
+
 
 
 
@@ -179,6 +316,9 @@ function ajaxdeleteReply(reply_seq,post_seq) {
 									</form>
 								</div>
 								
+							</div>
+							<div id="map" style="width:500px;height:400px;">
+							
 							</div>
 					</div>
 				</div>
