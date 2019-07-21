@@ -1,5 +1,7 @@
 package kr.or.ddit.login.controller;
 
+import java.io.IOException;
+
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
@@ -7,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,6 +66,21 @@ public class LoginController {
 			ServletContext ctx = request.getServletContext(); 
 			
 			ctx.setAttribute("boardList", boardService.getYBoard());
+			
+			String url = "https://search.naver.com/search.naver?where=news&sm=tab_jum&query=치매";
+			   Document doc = null;
+			try {
+				doc = Jsoup.connect(url).get();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+
+			Elements imgs = doc.select("#main_pack .type01 dl");
+			   
+			String src = imgs.outerHtml();
+			System.out.println(src);
+			session.setAttribute("news", src);   
 
 			return "tiles.main";
 

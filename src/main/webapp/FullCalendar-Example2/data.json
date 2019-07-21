@@ -1,0 +1,28 @@
+{"list" : [ {
+    "c_id": 1,
+    "c_title": "거래처 미팅",
+    "c_description": "Lorem ipsum dolor sit incid idunt ut Lorem ipsum sit.",
+    "c_start": "2019-05-07T09:30",
+    "c_end": "2019-05-07T15:00",
+    "c_type": "카테고리1",
+    "c_username": "다현",
+    "c_backgroundColor": "#D25565",
+    "c_textColor": "#ffffff",
+    "c_allDay": false
+  }, {
+    "c_id": 2,
+    "c_title": "치과예약",
+    "c_description": "Lorem ipsum dolor sit incid idunt ut Lorem ipsum sit.",
+    "c_start": "2019-05-01T12:30",
+    "c_end": "2019-05-01T15:30",
+    "c_type": "카테고리1",
+    "c_username": "나연",
+    "c_backgroundColor": "#9775fa",
+    "c_textColor": "#ffffff",
+    "c_allDay": false
+  }]
+  }
+
+  
+
+  

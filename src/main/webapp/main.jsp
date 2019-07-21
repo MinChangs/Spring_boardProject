@@ -17,20 +17,21 @@
 			<p>jsp를 통한 웹 프로그래밍 학습</p>
 			<hr>
 
-			<h3>상세내역</h3>
-			<p>JSP과정에서는 다음과 같은 내용을 학습한다.</p>
-			<ul>
-				<li>${userVo}</li>
-				<li>servlet 동작원리</li>
-				<li>jsp와 servlet의 관계</li>
-				<li>jsp 스크립틀릿 요소</li>
-				<li>jsp action tag (standard)</li>
-				<li>jstl</li>
-				<li>db pooling</li>
-				<li>페이지 모듈화</li>
+			<h3>뉴스</h3>
+			<p>뉴스크롤링.</p>
+<!-- 			<ul> -->
+<%-- 				<li>${userVo}</li> --%>
+<!-- 				<li>servlet 동작원리</li> -->
+<!-- 				<li>jsp와 servlet의 관계</li> -->
+<!-- 				<li>jsp 스크립틀릿 요소</li> -->
+<!-- 				<li>jsp action tag (standard)</li> -->
+<!-- 				<li>jstl</li> -->
+<!-- 				<li>db pooling</li> -->
+<!-- 				<li>페이지 모듈화</li> -->
+				${news}
 
-
-			</ul>
+<!-- 			</ul> -->
+			
 		</div>
 	</div>
 	<!-- /.blog-main -->

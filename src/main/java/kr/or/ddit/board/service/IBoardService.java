@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.or.ddit.board.model.AttachmentVo;
 import kr.or.ddit.board.model.BoardVo;
+import kr.or.ddit.board.model.CalendarVo;
 import kr.or.ddit.board.model.PostVo;
 import kr.or.ddit.board.model.ReplyVo;
 import kr.or.ddit.paging.model.PageVo;
@@ -217,5 +218,11 @@ public interface IBoardService {
 	* Method 설명 : 게시글 검색
 	*/
 	Map<String, Object> postSearch(Map<String, Object> map, PageVo pageVo,int borad_id);
+	
+	
+	
+	int insertCalendar(CalendarVo vo) ;
+	List<CalendarVo> getCalendar() ;
+	int updateCalendar(CalendarVo vo) ;
 
 }
