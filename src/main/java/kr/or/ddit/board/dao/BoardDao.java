@@ -310,6 +310,13 @@ public class BoardDao implements IBoardDao {
 		// TODO Auto-generated method stub
 		return sqlSession.update("board.updateCalendar",vo);
 	}
+
+
+
+	@Override
+	public int deleteCalendar(int c_id) {
+		return sqlSession.delete("board.deleteCalendar",c_id);
+	}
 	
 	
 

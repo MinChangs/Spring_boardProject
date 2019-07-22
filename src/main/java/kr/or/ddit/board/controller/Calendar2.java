@@ -133,8 +133,10 @@ public class Calendar2 {
 	@RequestMapping(path = "/updateCalendar")
 //	int _id,
 	public String updateCalendar(Model model, @RequestBody List<Map<String,Object>>  list){
-		logger.debug("!!!!endDate : {}", ((String)list.get(0).get("endDate")).getClass());
-		logger.debug("!!!!dow : {}", list.get(0).get("dow").getClass());
+		logger.debug("!!!!endDate : {}", ((String)list.get(0).get("endDate")));
+		logger.debug("!!!!_id : {}", Integer.parseInt((String)list.get(0).get("_id")));
+		
+//		logger.debug("!!!!dow : {}", list.get(0).get("dow").getClass());
 
 //		boolean result = Boolean.valueOf((boolean) list.get(0).get("allDay")).booleanValue();
 		logger.debug("!!!!allday : {}", (boolean) list.get(0).get("allDay"));
@@ -161,18 +163,15 @@ public class Calendar2 {
 		cal2.set(Calendar.MINUTE,Integer.parseInt(((String)list.get(0).get("startTime")).substring(3))); // 시작 날짜 셋팅
 		String startDate2 = dateFormat.format(cal2.getTime());
 		
-		int compare = cal.compareTo(cal2);
-		while (true) { // 다르다면 실행, 동일 하다면 빠져나감
 
-//			startDate2 = dateFormat.format(cal2.getTime());
 			startDate2 = startDate2.substring(0, 10) + "T" + startDate2.substring(11, startDate2.length());
-			endDate2 = startDate2.substring(0, 10) + "T" + endDate2.substring(11, endDate2.length());
+			endDate2 = endDate2.substring(0, 10) + "T" + endDate2.substring(11, endDate2.length());
 					
 			CalendarVo vo = new CalendarVo();
 			vo.setC_allDay((boolean) list.get(0).get("allDay"));
 			vo.setC_backgroundColor(((String)list.get(0).get("backgroundColor")));
 			vo.setC_description(((String)list.get(0).get("description")));
-//			vo.setC_id(_id);
+			vo.setC_id(Integer.parseInt((String)list.get(0).get("_id")));
 			vo.setC_textColor(((String)list.get(0).get("textColor")));
 			vo.setC_title(((String)list.get(0).get("title")));
 			vo.setC_type(((String)list.get(0).get("type")));
@@ -184,18 +183,23 @@ public class Calendar2 {
 			boardService.updateCalendar(vo);
 					
 		
-			cal2.add(Calendar.DATE, 1); //1일 더해줌
-			startDate2 = dateFormat.format(cal2.getTime()); // 비교를 위한 값 셋팅
+
 			
-			
-			compare = cal2.compareTo(cal);
-			if(compare>0) {
-				break;
-			}
-			
-		}
+//		}
 		
 		
+		return "redirect:/getCalendar";
+	}
+	
+	
+	
+	
+	
+	
+	@RequestMapping(path = "/deleteCalendar")
+	public String deleteCalendar(Model model, int c_id){
+		logger.debug("!!!! c_id : {}", c_id);
+		boardService.deleteCalendar(c_id);
 		return "redirect:/getCalendar";
 	}
 	

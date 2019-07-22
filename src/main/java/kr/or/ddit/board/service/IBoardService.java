@@ -224,5 +224,6 @@ public interface IBoardService {
 	int insertCalendar(CalendarVo vo) ;
 	List<CalendarVo> getCalendar() ;
 	int updateCalendar(CalendarVo vo) ;
+	int deleteCalendar(int c_id);
 
 }

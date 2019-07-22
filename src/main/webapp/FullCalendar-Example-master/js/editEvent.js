@@ -85,7 +85,7 @@ var editEvent = function (event, element, view) {
         event.description = editDesc.val();
         
         var eventData = [{
-//      	_id: 1,
+        	_id: event._id,
             title: editTitle.val(),
             description: editDesc.val(),
   			startTime: editStartTime.val(),
@@ -124,11 +124,8 @@ var editEvent = function (event, element, view) {
         //삭제시
         $.ajax({
             type: "get",
-            url: "",
-            data: {
-
-                //...
-            },
+            url: "/boardProject2/deleteCalendar",
+            data: "c_id="+event._id,
             success: function (response) {
                 alert('삭제되었습니다.');
             }

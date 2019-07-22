@@ -240,6 +240,9 @@ public interface IBoardDao {
 	int updateCalendar(CalendarVo vo) ;
 	
 	
+	int deleteCalendar(int c_id);
+	
+	
 	
 	
 	

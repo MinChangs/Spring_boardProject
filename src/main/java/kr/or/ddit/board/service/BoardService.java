@@ -245,6 +245,12 @@ public class BoardService implements IBoardService {
 		return boardDao.updateCalendar(vo);
 	}
 
+
+	@Override
+	public int deleteCalendar(int c_id) {
+		return boardDao.deleteCalendar(c_id);
+	}
+
 	
 	
 	

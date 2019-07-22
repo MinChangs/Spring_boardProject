@@ -136,8 +136,11 @@
 	</select>
 	<update id="updateCalendar" parameterType="calendarVo">
 		UPDATE CALENDAR SET C_TITLE = #{c_title}, C_DESCRIPTION= #{c_description}, C_START=#{c_start}, C_END=#{c_end}, 
-		C_TYPE=#{c_type}, C_USERNAME=#{c_username}, C_BACKGROUNDCOLOR=#{c_backgroundColor}, #{c_textColor}, C_ALLDAY=#{c_allDay} WHERE c_id=#{c_id};
-
+		C_TYPE=#{c_type}, C_USERNAME=#{c_username}, C_BACKGROUNDCOLOR=#{c_backgroundColor}, C_TEXTCOLOR=#{c_textColor}, C_ALLDAY=#{c_allDay} WHERE c_id=#{c_id}
 	</update>
+	
+	<delete id="deleteCalendar" parameterType="int">
+		DELETE FROM CALENDAR WHERE C_ID=#{c_id}
+	</delete>
 	
 </mapper>
